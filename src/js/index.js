@@ -1,7 +1,6 @@
-import './style.css';
-import './style.less';
-import './iconfont/iconfont.css';
-
+import '../css/style.css';
+import '../css/style.less';
+import '../iconfont/iconfont.css';
 
 // import html from './index.html';
 

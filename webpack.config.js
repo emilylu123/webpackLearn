@@ -1,46 +1,36 @@
 /*
-loader: 1 download 2 use
-plugins: 1 download 2 import 3 use
+    开发环境配置
+    loader: 1 download 2 use
+    plugins: 1 download 2 import 3 use
+    运行指令
+        webpack 
+        npx webpack serve
  */
 const { resolve } = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    entry: './src/index.js',
+    entry: './src/js/index.js',
     output: {
-        filename: 'built.js',
+        filename: 'js/built.js',
         path: resolve(__dirname, 'build')
     },
     //loader配置
     module: {
         rules: [
             {
-                // 下载style-loader css-loader
-                test: /\.css$/,
-                // use数组中loader执行顺序， 右->左 下->上
-                use: [
-                    // 创建style标签，将js中样资源插入进行，添加到head中生效
-                    'style-loader',
-                    // 将css文件变成commonjs模块加载js中，里边内容是样式字符串
-                    'css-loader'
-                ]
-            },
-            {
-                // 下载less less-loader
+                // 下载less less-loader style-loader css-loader
                 test: /\.less$/,
+                // use数组中loader执行顺序， 右->左 下->上
                 use: ['style-loader', 'css-loader', 'less-loader']
             },
             {
-                // 下载less less-loader
                 test: /\.scss$/,
                 use: ['style-loader', 'css-loader', 'sass-loader']
             },
             {
-                exclude: /\.(css|js|html|less|jpg|png)$/,
-                loader: 'file-loader',
-                options: {
-                    name: '[name].[ext]'
-                }
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader']
             },
             {
                 // 下载 url-loader file-loader
@@ -51,14 +41,23 @@ module.exports = {
                 // 缺：图片体积更大（文件请求速度更慢）
                 options: {
                     limit: 8 * 1024,
-                    esModule: false,
-                    name: '[hash:10].[ext]'
+                    name: '[hash:10].[ext]',
+                    esModule: false, // 关闭es6模块化
+                    outputPath: 'images',
                 }
             },
             {
-                // 处理html的img
+                // 处理html中img
                 test: /\.html$/,
                 loader: 'html-loader',
+            },
+            {
+                exclude: /\.(html|js|css|scss|less|jpg|png|gif)$/,
+                loader: 'file-loader',
+                options: {
+                    name: '[name].[ext]',
+                    outputPath: 'media',
+                }
             },
 
         ]
@@ -70,14 +69,15 @@ module.exports = {
         })
     ],
 
-    mode: 'development',
-    // mode: 'production',
+    mode: 'development', // mode: 'production',
 
     // 开发服务器devServer
     // 自动化（自动编译，自动打开浏览器，自动刷新～～）
     // 启动命令-> npx webpack server
     devServer: {
+        // 项目构建后路径
         contentBase: resolve(__dirname, 'build'),
+        // 启动gzip压缩
         compress: true,
         port: 3000,
         open: true

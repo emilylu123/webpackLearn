@@ -8,19 +8,18 @@ body {
 #box1 {
   width: 600px;
   height: 200px;
-  background: url("./images/angular.jpg") no-repeat center;
+  background: url("../images/angular.jpg") no-repeat center;
 }
 #box2 {
   width: 600px;
   height: 200px;
-  background: url("./images/react.png") no-repeat center;
+  background: url("../images/react.png") no-repeat center;
 }
 #box3 {
   width: 600px;
   height: 200px;
-  background: url("./images/vue.png") center;
+  background: url("../images/vue.png") center;
 }
 .iconfont {
-  width: 150px;
-  height: 150px;
+  border: 1px red solid;
 }
